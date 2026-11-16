@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TestSite</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#1d2433;--muted:#667085;--brand:#4f46e5;--brand2:#4338ca;--border:#e4e7ec;--ok:#16a34a;--warn:#d97706;--bad:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+header{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:24px;padding:12px 20px}
+.logo{font-weight:800;font-size:20px;color:var(--brand);text-decoration:none}
+.menu{display:flex;gap:4px;list-style:none;margin:0;padding:0;flex:1}
+.menu a,.menu button{display:block;padding:8px 12px;border-radius:8px;color:var(--text);text-decoration:none;font:inherit;background:none;border:0;cursor:pointer}
+.menu a:hover,.menu button:hover{background:var(--bg)}
+.menu a.active{color:var(--brand);font-weight:600;background:#eef2ff}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:6px;min-width:180px;list-style:none;margin:4px 0 0}
+.dropdown.open .dropdown-menu{display:block}
+.hamburger{display:none;background:none;border:0;font-size:24px;cursor:pointer}
+main{max-width:1100px;margin:auto;padding:32px 20px}
+.page{display:none}.page.active{display:block}
+h1{margin-top:0}
+.hero{background:linear-gradient(135deg,var(--brand),#7c3aed);color:#fff;border-radius:16px;padding:48px 32px;margin-bottom:28px}
+.hero p{opacity:.9;max-width:560px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;border:1px solid transparent;font:inherit;font-weight:600;cursor:pointer;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{background:var(--brand2)}
+.btn-secondary{background:#fff;color:var(--text);border-color:var(--border)}.btn-secondary:hover{background:var(--bg)}
+.btn-success{background:var(--ok);color:#fff}.btn-warning{background:var(--warn);color:#fff}.btn-danger{background:var(--bad);color:#fff}
+.btn-ghost{background:none;color:var(--brand)}.btn-ghost:hover{background:#eef2ff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{padding:6px 12px;font-size:14px}.btn-lg{padding:14px 26px;font-size:18px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.counter{font-size:40px;font-weight:800;margin:8px 0}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font:inherit}
+.tabs{display:flex;border-bottom:1px solid var(--border);gap:4px}
+.tab{padding:10px 16px;background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;font:inherit}
+.tab.active{border-color:var(--brand);color:var(--brand);font-weight:600}
+.tabpanel{padding:16px 0;display:none}.tabpanel.active{display:block}
+details{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:50}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:24px;width:min(420px,90vw)}
+.toast{position:fixed;bottom:20px;right:20px;background:#111827;color:#fff;padding:12px 18px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.25s;z-index:60}
+.toast.show{opacity:1;transform:none}
+footer{text-align:center;color:var(--muted);padding:30px;font-size:14px}
+.switch{display:flex;align-items:center;gap:10px;font-weight:600}
+.switch input{width:auto}
+@media(max-width:720px){.hamburger{display:block;margin-left:auto}.menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:10px;border-bottom:1px solid var(--border)}.menu.open{display:flex}.dropdown-menu{position:static;box-shadow:none}}
+</style>
+</head>
+<body>
+<header>
+ <nav class="nav">
+  <a href="#home" class="logo">TestSite</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+  <ul class="menu" id="menu">
+   <li><a href="#home" data-link>Home</a></li>
+   <li><a href="#about" data-link>About</a></li>
+   <li class="dropdown" id="dd">
+    <button id="ddBtn">Services ▾</button>
+    <ul class="dropdown-menu">
+     <li><a href="#web-design" data-link>Web Design</a></li>
+     <li><a href="#seo" data-link>SEO</a></li>
+     <li><a href="#hosting" data-link>Hosting</a></li>
+    </ul>
+   </li>
+   <li><a href="#buttons" data-link>Buttons</a></li>
+   <li><a href="#faq" data-link>FAQ</a></li>
+   <li><a href="#contact" data-link>Contact</a></li>
+  </ul>
+ </nav>
+</header>
+
+<main>
+ <section class="page" id="page-home">
+  <div class="hero">
+   <h1>Welcome to TestSite</h1>
+   <p>A sample multi-page website for testing navigation, buttons, menus, forms and interactive components.</p>
+   <div class="row">
+    <a href="#buttons" class="btn btn-secondary">Try the buttons</a>
+    <button class="btn btn-ghost" style="color:#fff" onclick="openModal()">Open a modal</button>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="card"><h3>⚡ Fast</h3><p>Instant page switching with hash routing.</p><a href="#about" class="btn btn-sm btn-primary">Learn more</a></div>
+   <div class="card"><h3>🧩 Components</h3><p>Dropdowns, tabs, modals, toasts and accordions.</p><a href="#buttons" class="btn btn-sm btn-primary">See them</a></div>
+   <div class="card"><h3>📱 Responsive</h3><p>Hamburger menu appears on small screens.</p><a href="#contact" class="btn btn-sm btn-primary">Get in touch</a></div>
+  </div>
+ </section>
+
+ <section class="page" id="page-about">
+  <h1>About Us</h1>
+  <p>We're a fictional team building test pages. Use the tabs below.</p>
+  <div class="tabs" data-tabs>
+   <button class="tab active" data-tab="t1">Mission</button>
+   <button class="tab" data-tab="t2">Team</button>
+   <button class="tab" data-tab="t3">History</button>
+  </div>
+  <div class="tabpanel active" id="t1">Our mission is to make testing websites easy and fun.</div>
+  <div class="tabpanel" id="t2"><div class="grid"><div class="card"><b>Alex</b><br>Designer</div><div class="card"><b>Sam</b><br>Developer</div><div class="card"><b>Jordan</b><br>QA Tester</div></div></div>
+  <div class="tabpanel" id="t3">Founded in 2026 as a demo project. Still going strong.</div>
+ </section>
+
+ <section class="page" id="page-web-design"><h1>Web Design</h1><p>Custom, responsive websites built for any device.</p><div class="card"><h3>Starter Plan — ₹9,999</h3><p>5 pages, mobile-friendly, contact form.</p><button class="btn btn-primary" onclick="toast('Web Design plan added to cart')">Add to cart</button></div></section>
+ <section class="page" id="page-seo"><h1>SEO</h1><p>Rank higher with technical and on-page optimisation.</p><div class="card"><h3>Growth Plan — ₹4,999/mo</h3><p>Keyword research, monthly reports.</p><button class="btn btn-primary" onclick="toast('SEO plan added to cart')">Add to cart</button></div></section>
+ <section class="page" id="page-hosting"><h1>Hosting</h1><p>Fast, secure hosting with 99.9% uptime.</p><div class="card"><h3>Basic Hosting — ₹199/mo</h3><p>10 GB SSD, free SSL.</p><button class="btn btn-primary" onclick="toast('Hosting plan added to cart')">Add to cart</button></div></section>
+
+ <section class="page" id="page-buttons">
+  <h1>Buttons Playground</h1>
+  <div class="card">
+   <h3>Variants</h3>
+   <div class="row">
+    <button class="btn btn-primary" onclick="toast('Primary clicked')">Primary</button>
+    <button class="btn btn-secondary" onclick="toast('Secondary clicked')">Secondary</button>
+    <button class="btn btn-success" onclick="toast('Success!')">Success</button>
+    <button class="btn btn-warning" onclick="toast('Warning!')">Warning</button>
+    <button class="btn btn-danger" onclick="toast('Danger!')">Danger</button>
+    <button class="btn btn-ghost" onclick="toast('Ghost clicked')">Ghost</button>
+    <button class="btn btn-primary" disabled>Disabled</button>
+   </div>
+   <h3>Sizes</h3>
+   <div class="row" style="align-items:center">
+    <button class="btn btn-primary btn-sm">Small</button><button class="btn btn-primary">Medium</button><button class="btn btn-primary btn-lg">Large</button>
+   </div>
+  </div>
+  <div class="grid" style="margin-top:16px">
+   <div class="card"><h3>Counter</h3><div class="counter" id="count">0</div>
+    <div class="row"><button class="btn btn-secondary" onclick="setCount(-1)">−</button><button class="btn btn-primary" onclick="setCount(1)">+</button><button class="btn btn-ghost" onclick="setCount(0,true)">Reset</button></div></div>
+   <div class="card"><h3>Toggle</h3><label class="switch"><input type="checkbox" id="tgl" onchange="document.getElementById('tglTxt').textContent=this.checked?'ON':'OFF'"> Status: <span id="tglTxt">OFF</span></label>
+    <h3>Loading</h3><button class="btn btn-primary" id="loadBtn" onclick="fakeLoad(this)">Save</button></div>
+   <div class="card"><h3>Dialogs</h3><div class="row"><button class="btn btn-primary" onclick="openModal()">Open modal</button><button class="btn btn-secondary" onclick="toast('This is a toast 🍞')">Show toast</button></div></div>
+  </div>
+ </section>
+
+ <section class="page" id="page-faq">
+  <h1>FAQ</h1>
+  <details><summary>Is this a real website?</summary><p>No, it's a test site for trying out UI elements.</p></details>
+  <details><summary>Does the contact form send email?</summary><p>No, submissions are only shown on screen.</p></details>
+  <details><summary>Does it work on mobile?</summary><p>Yes — shrink the window to see the hamburger menu.</p></details>
+ </section>
+
+ <section class="page" id="page-contact">
+  <h1>Contact</h1>
+  <form class="card" id="form" style="max-width:520px">
+   <label for="n">Name</label><input id="n" required>
+   <label for="e">Email</label><input id="e" type="email" required>
+   <label for="s">Subject</label><select id="s"><option>General</option><option>Support</option><option>Sales</option></select>
+   <label for="m">Message</label><textarea id="m" rows="4" required></textarea>
+   <div class="row"><button class="btn btn-primary" type="submit">Send</button><button class="btn btn-secondary" type="reset">Clear</button></div>
+   <p id="formMsg" style="color:var(--ok);font-weight:600"></p>
+  </form>
+ </section>
+
+ <section class="page" id="page-404"><h1>404 – Page not found</h1><a href="#home" class="btn btn-primary">Go home</a></section>
+</main>
+
+<footer>© 2026 TestSite · <a href="#home">Home</a> · <a href="#contact">Contact</a></footer>
+
+<div class="modal-bg" id="modal"><div class="modal"><h2 style="margin-top:0">Hello 👋</h2><p>This is a modal dialog. Confirm or cancel below.</p><div class="row" style="justify-content:flex-end"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="closeModal();toast('Confirmed!')">Confirm</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const pages=['home','about','web-design','seo','hosting','buttons','faq','contact'];
+function route(){
+ const h=location.hash.slice(1)||'home';const p=pages.includes(h)?h:'404';
+ document.querySelectorAll('.page').forEach(s=>s.classList.toggle('active',s.id==='page-'+p));
+ document.querySelectorAll('[data-link]').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+h));
+ document.getElementById('dd').classList.remove('open');document.getElementById('menu').classList.remove('open');
+ window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);route();
+document.getElementById('ddBtn').onclick=e=>{e.stopPropagation();document.getElementById('dd').classList.toggle('open')};
+document.addEventListener('click',()=>document.getElementById('dd').classList.remove('open'));
+document.getElementById('hamburger').onclick=()=>document.getElementById('menu').classList.toggle('open');
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));
+ document.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));
+});
+let count=0;function setCount(d,reset){count=reset?0:count+d;document.getElementById('count').textContent=count}
+let tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+function openModal(){document.getElementById('modal').classList.add('open')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
+function fakeLoad(b){b.disabled=true;b.textContent='Saving…';setTimeout(()=>{b.disabled=false;b.textContent='Save';toast('Saved ✅')},1500)}
+document.getElementById('form').onsubmit=e=>{e.preventDefault();document.getElementById('formMsg').textContent='Thanks, '+document.getElementById('n').value+'! (Demo only — nothing was sent.)';e.target.reset()};
+</script>
+</body>
+</html>
